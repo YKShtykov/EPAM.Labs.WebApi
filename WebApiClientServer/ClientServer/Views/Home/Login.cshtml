@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+
+<html ng-app="Module">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+    <script src="~/Scripts/module.js"></script>
+    <title>index</title>
+</head>
+<body ng-controller="loger">
+    <div>
+        <input type="text" name="login" placeholder="Login" value="" ng-model="login" />
+        <input type="text" name="password" placeholder="Password" value="" ng-model="password" />
+        <button type="submit" value="Submit" ng-click="Login()">Login</button>
+        <button type="submit" value="Submit" ng-click="Logout()">Logout</button>
+    </div>
+</body>
+</html>

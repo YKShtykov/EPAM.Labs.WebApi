@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html ng-app="Module">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+    <script src="~/Scripts/module.js"></script>
+    <title>index</title>
+</head>
+<body ng-controller="Controller">
+    <div>
+        <input type="number" name="id" placeholder="0" value="" ng-model="id" />
+        
+        <input type="text" name="caption" placeholder="Caption" value="" ng-model="caption" />
+        <input type="text" name="author" placeholder="Author" value="" ng-model="author" />
+        <textarea rows="3" cols="45" name="text" placeholder="Text" ng-model="text"></textarea>
+        <button type="submit" value="Submit" ng-click="AddItem()">Add Item</button>
+        <button type="submit" value="Submit" ng-click="Change()">Change Item</button>
+        <button type="submit" value="Submit" ng-click="Find()">Find</button>
+        <button type="submit" value="Submit" ng-click="Delete()">Delete</button>
+
+        <div ng-repeat="item in items track by $index" style="border:1px solid black">
+            <p>{{item.caption}}</p>
+            <p>{{item.author}}</p>
+            <p>{{item.text}}</p>
+        </div>
+    </div>
+</body>
+</html>

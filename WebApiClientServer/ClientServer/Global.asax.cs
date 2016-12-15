@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ClientServer.Auth;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -9,18 +11,15 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Script.Serialization;
 using System.Web.Security;
-using WebApi2.Auth;
-using WebApi2.Models;
 
-namespace WebApi2
+namespace ClientServer
 {
   public class WebApiApplication : System.Web.HttpApplication
   {
     protected void Application_Start()
     {
+      Database.SetInitializer(new UsersInitializer());
       GlobalConfiguration.Configure(WebApiConfig.Register);
-      Database.SetInitializer(new ItemDbInitializer());
-      Database.SetInitializer(new ServerDbInitializer());
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       BundleConfig.RegisterBundles(BundleTable.Bundles);
@@ -30,18 +29,18 @@ namespace WebApi2
     {
       HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
 
-      if (authCookie != null && authCookie.Value != "")
+      if (authCookie != null&&authCookie.Value!="")
       {
         FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
 
         JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-        ServerPrincipalSerializeModel serializeModel = serializer.Deserialize<ServerPrincipalSerializeModel>(authTicket.UserData);
+        UserPrincipalSerializeModel serializeModel = serializer.Deserialize<UserPrincipalSerializeModel>(authTicket.UserData);
 
-        ServerPrincipal newServer = new ServerPrincipal(authTicket.Name);
-        newServer.CodeNumber= serializeModel.codeNumber;
+        UserPrincipal newUser = new UserPrincipal(authTicket.Name);
+        newUser.Login = serializeModel.Login;
 
-        HttpContext.Current.User = newServer;
+        HttpContext.Current.User = newUser;
       }
     }
   }
